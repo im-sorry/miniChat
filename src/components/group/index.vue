@@ -1,12 +1,12 @@
 <template>
-    <div class="w100 h100 group">
+    <div class="w100 group mainbox">
       <div class="msg w100" ref="msg">
         <message v-for="(item, index) in groupMsg" :dir="item.id === id? 'right' : 'left'" :id="item.id" :msg="item.msg" :time="item.time" :headUrl="item.headUrl" :name="item.name" :key="index"></message>
       </div>
       <div class="input">
         <div class="inputBox">
           <mt-field v-model="msg" class="field" @mouseenter.enter="send"></mt-field>
-          <label @click="send" class="sendLabel">发送</label>
+          <mt-button @click="send" size="small" type="danger" :disabled="buttonDisable">发送</mt-button>
         </div>
       </div>
     </div>
@@ -20,7 +20,13 @@
         name: "index",
         data(){
           return {
-            msg: ''
+            msg: '',
+            buttonDisable: true
+          }
+        },
+        watch: {
+          msg(val){
+              this.buttonDisable = val === '';
           }
         },
         created(){
@@ -29,7 +35,7 @@
           });
         },
         computed: {
-          ...mapState(['id', 'name', 'headUrl', 'groupMsg'])
+          ...mapState(['id', 'name', 'headUrl', 'groupMsg','account'])
         },
         mounted(){
           this.scrollToBottom();
@@ -37,13 +43,13 @@
         methods:{
           send(){
             let time = new Date().toTimeString().split(' ')[0],
-                dir = 'right',
                 msg = {
                   time,
                   msg: this.msg,
                   id: this.id,
                   name: this.name,
-                  headUrl: this.headUrl
+                  headUrl: this.headUrl,
+                  account: this.account
                 };
             this.$s.emit('groupMsg', msg);
             this.$store.commit('addGroupMsg', msg);
@@ -65,10 +71,11 @@
 
 <style scoped>
   .group{
-    margin-top:-20px;
+    display: flex;
+    flex-direction: column;
   }
   .msg{
-    height:75%;
+    flex-grow:1;
     overflow: scroll;
   }
 

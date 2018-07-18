@@ -1,5 +1,5 @@
 <template>
-    <div id="config">
+    <div id="config" class="mainbox">
       <mt-field label="账号" readonly :value="account" disableClear></mt-field>
       <mt-field label="用户名" placeholder="请输入用户名" v-model="name" :value="name"></mt-field>
       <mt-field label="邮箱" placeholder="请输入邮箱" type="email" v-model="email" :value="email"></mt-field>
@@ -16,7 +16,6 @@
         name: "config",
         data(){
           return {
-            account: '1222',
             name: '',
             email: '',
             phone: '',
@@ -27,7 +26,6 @@
         created(){
           let msg = window.localStorage.getItem('userMsg');
           this.name = window.localStorage.getItem('name');
-          this.account = window.localStorage.getItem('account');
           if(msg){
             let obj = JSON.parse(msg);
             this.email = obj.email;
@@ -55,8 +53,8 @@
               }
               this.saveUserMsgToWindow(data);
               if(data.name !== this.$store.state.name){
-                this.$store.commit('changeName', {id: this.id, name:data.name});
-                this.$s.emit('changeName', {id: this.id, name:data.name});
+                this.$store.commit('changeName', {id:this.id,account: this.account, name:data.name});
+                this.$s.emit('changeName', {id:this.id,account: this.account, name:data.name});
               }
               this.$store.commit('saveUserInfo', data);
               this.$nextTick(() => {
@@ -77,7 +75,7 @@
           }
         },
         computed: {
-          ...mapState(['id'])
+          ...mapState(['id', 'account'])
         }
     }
 </script>

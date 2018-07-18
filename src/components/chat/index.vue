@@ -1,9 +1,8 @@
 <template>
-    <div class="container">
-      <people v-for="(item, index) in msg" :id="item.id" :name="item.name" :headUrl="item.headUrl" :key="index"></people>
-      <div class="tip">
-
-      </div>
+    <div class="container mainbox">
+      <people v-for="(item, index) in msg" :id="item.id" :name="item.name" :headUrl="item.headUrl" :account="item.account" :key="index">
+        <mt-badge slot="right" size="small" color="red" v-if="item.noViewMsgNum !== 0">{{item.noViewMsgNum}}</mt-badge>
+      </people>
     </div>
 </template>
 
@@ -29,7 +28,4 @@
 </script>
 
 <style scoped>
-  .container{
-    margin-top:-20px;
-  }
 </style>

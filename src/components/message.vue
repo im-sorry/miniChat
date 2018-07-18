@@ -31,6 +31,7 @@
   .message{
     display: flex;
     justify-content: space-between;
+    margin-bottom: 15px;
     img{
       display: block;
       width:30px;

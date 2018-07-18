@@ -1,6 +1,6 @@
 <template>
-   <div class="friend">
-     <people v-for="(item, index) in onlinePersons" :id="item.id" :name="item.name" :headUrl="item.headUrl" :key="index" v-if="id !== item.id"></people>
+   <div class="friend mainbox">
+     <people v-for="(item, index) in onlinePersons" :id="item.id" :name="item.name" :headUrl="item.headUrl" :key="index" :account="item.account" v-if="id !== item.id"></people>
    </div>
 </template>
 
@@ -25,6 +25,5 @@
 
 <style scoped>
   .friend{
-    margin-top:-20px;
   }
 </style>

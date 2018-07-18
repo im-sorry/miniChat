@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mainbox">
       这里是动态
     </div>
 </template>
