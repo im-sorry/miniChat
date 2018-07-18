@@ -14,13 +14,16 @@ let name = window.localStorage.getItem('name'),
     account = window.localStorage.getItem('account');
 if(account){
   url += "?name=" + name + "&account=" + account;
+  store.commit('setAccount', account);
 }
-console.log(url)
 const socket = io(url);
 socket.on('initData', data => {
   store.commit('initData', data);
-  window.localStorage.setItem('account', data.account);
-  window.localStorage.setItem('name', data.name);
+  if(!account){
+    window.localStorage.setItem('account', data.account);
+    window.localStorage.setItem('name', data.name);
+    store.commit('setAccount', data.account);
+  }
 });
 socket.on('onlineNum', num => {
   store.commit('setOnlineNum', num);
@@ -76,6 +79,9 @@ Vue.component(Field.name, Field);
 import { Range } from 'mint-ui';
 Vue.component(Range.name, Range);
 
+//使用Badge
+import { Badge } from 'mint-ui';
+Vue.component(Badge.name, Badge);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
